@@ -1,22 +1,16 @@
 package ext
 
+/**
+ * instance methods extends
+ */
+@Category(File)
 class FileExt {
-  static {
-    /** instance methods extends */
-    File.metaClass.define {
-      /** override '/' operator. */
-      div { String other ->
-        if (other in String) {
-          new File(delegate, other)
-        } else {
-          throw new IllegalArgumentException('div allows only String.')
-        }
-      }
-    }
+  static final def withStatic = [FileExt, FileStaticExt]
 
-    /** static methods extends */
-    File.metaClass.'static'.pwd = {
-      new File('.')
-    }
+  /**
+   * override '/' operator.
+   */
+  File div(String other) {
+    new File(this, other)
   }
 }

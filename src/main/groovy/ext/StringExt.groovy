@@ -1,17 +1,21 @@
 package ext
 
+/**
+ * instance methods extends
+ */
+@Category(String)
 class StringExt {
-  static {
-    def replacer = { all, _1 -> _1.toUpperCase()[-1] } // all is whole match
+  static final def withStatic = [StringExt]
 
-    /** instance methods extends */
-    String.metaClass.define {
-      camelize {
-        delegate.toLowerCase().replaceAll(/(_.)/, replacer)
-      }
-      pascalize {
-        delegate.toLowerCase().replaceAll(/(^.|_.)/, replacer)
-      }
-    }
+  private static def replacer = { all, _1 -> // all is whole match
+    _1.toUpperCase()[-1]
+  }
+
+  String camelize() {
+    this.toLowerCase().replaceAll(/(_.)/, replacer)
+  }
+
+  String pascalize() {
+    this.toLowerCase().replaceAll(/(^.|_.)/, replacer)
   }
 }

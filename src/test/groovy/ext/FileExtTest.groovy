@@ -8,9 +8,7 @@ class FileExtTest extends Specification {
     def file = null
 
     when:
-    use(FileExt.withStatic) {
-      file = File.pwd()
-    }
+    using{ file = File.pwd() }
 
     then:
     file.name == '.'
@@ -19,25 +17,27 @@ class FileExtTest extends Specification {
   def "is div work?"() {
     given:
     def file = null
-    use(FileExt.withStatic) {
-      file = File.pwd()
-    }
+    using{ file = File.pwd() }
 
     when:
-    use(FileExt.withStatic) {
-      file = file / 'a'
-    }
+    using{ file = file / 'a' }
 
     then:
     file.path == './a'
 
     when:
-    use(FileExt.withStatic) {
-      file = file / 'b' / 'c'
-    }
+    using{ file = file / 'b' / 'c' }
 
     then:
     file.path == './a/b/c'
   }
 
+  /**
+   * using use block with static
+   */
+  def using(Closure clos) {
+    use(FileExt.withStatic) {
+      return clos.call()
+    }
+  }
 }

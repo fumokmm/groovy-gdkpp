@@ -1,11 +1,11 @@
 How to use
 ----------
 
-1. Compile 'groovy-extensions.jar'. (Require [Gradle][])
+1. Compile 'groovy-gdkpp.jar'. (Require [Gradle][])
 
 > $ gradle
 
-2. Put 'groovy-extensions.jar' on the classpath.
+2. Put 'groovy-gdkpp.jar' on the classpath.
 
 3. Using example
 

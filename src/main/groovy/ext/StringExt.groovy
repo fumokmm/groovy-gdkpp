@@ -18,4 +18,15 @@ class StringExt {
   String pascalize() {
     this.toLowerCase().replaceAll(/(^.|_.)/, replacer)
   }
+
+  /**
+   * Convert characters between characters numbers.
+   * For example:
+   *   assert 'i18n' == 'internationalization'.numberize()
+   */
+  String numberize() {
+    int size = this.size()
+    if (size > 2) this[0] + (size - 2).toString() + this[-1]
+    else this
+  }
 }

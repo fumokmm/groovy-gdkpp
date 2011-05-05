@@ -25,6 +25,20 @@ class StringExtTest extends Specification {
     'aa_bb_cc_dd_ee' | 'AaBbCcDdEe'
   }
 
+  def "is numberize work?"() {
+    expect:
+    using{ str.numberize() } == result
+
+    where:
+    str                    | result
+    'internationalization' | 'i18n'
+    'あいうえお'            | 'あ3お'
+    'abc'                  | 'a1c'
+    'ab'                   | 'ab'
+    'a'                    | 'a'
+    ''                     | ''
+  }
+
   /**
    * using use block with static
    */

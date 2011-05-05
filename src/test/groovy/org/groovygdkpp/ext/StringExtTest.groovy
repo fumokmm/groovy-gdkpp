@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
 import spock.lang.*
 

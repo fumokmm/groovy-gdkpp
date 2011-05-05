@@ -14,30 +14,46 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
-/**
- * instance methods extends
- */
-@Category(Object)
-class ObjectExt {
-  static final def withStatic = [ObjectExt]
+import spock.lang.*
 
-  def collectWithIndex(Closure clos) {
-    def result = []
-    this.eachWithIndex { item, idx ->
-      result << clos(item, idx)
-    }
-    result
+class FileExtTest extends Specification {
+  def "is pwd work?"() {
+    given:
+    def file = null
+
+    when:
+    using{ file = File.pwd() }
+
+    then:
+    file.name == '.'
+  }
+
+  def "is div work?"() {
+    given:
+    def file = null
+    using{ file = File.pwd() }
+
+    when:
+    using{ file = file / 'a' }
+
+    then:
+    file.path == './a'
+
+    when:
+    using{ file = file / 'b' / 'c' }
+
+    then:
+    file.path == './a/b/c'
   }
 
   /**
-   * Haskell like replicate.
-   * cf. http://zvon.org/other/haskell/Outputprelude/replicate_f.html
+   * using use block with static
    */
-  def replicate(int num) {
-    def result = []
-    num.times{ result << this }
-    result
+  def using(Closure clos) {
+    use(FileExt.withStatic) {
+      return clos.call()
+    }
   }
 }

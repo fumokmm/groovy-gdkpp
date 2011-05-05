@@ -14,20 +14,35 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
 /**
  * instance methods extends
  */
-@Category(List)
-class ListExt {
-  static final def withStatic = [ListExt]
+@Category(String)
+class StringExt {
+  static final def withStatic = [StringExt]
+
+  private static def replacer = { all, _1 -> // all is whole match
+    _1.toUpperCase()[-1]
+  }
+
+  String camelize() {
+    this.toLowerCase().replaceAll(/(_.)/, replacer)
+  }
+
+  String pascalize() {
+    this.toLowerCase().replaceAll(/(^.|_.)/, replacer)
+  }
 
   /**
-   * haskell like zip method
-   * cf. http://zvon.org/other/haskell/Outputprelude/zip_f.html
+   * Convert characters between characters numbers.
+   * For example:
+   *   assert 'i18n' == 'internationalization'.numberize()
    */
-  def zip(List other) {
-    [this, other].transpose()
+  String numberize() {
+    int size = this.size()
+    if (size > 2) this[0] + (size - 2).toString() + this[-1]
+    else this
   }
 }

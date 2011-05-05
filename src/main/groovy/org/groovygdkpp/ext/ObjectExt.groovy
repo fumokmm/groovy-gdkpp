@@ -14,28 +14,30 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
-import spock.lang.*
+/**
+ * instance methods extends
+ */
+@Category(Object)
+class ObjectExt {
+  static final def withStatic = [ObjectExt]
 
-class ListExtTest extends Specification {
-  def "is zip work?"() {
-    expect:
-    using{ list1.zip(list2) } == zipped
-    
-    where:
-    // cf. http://zvon.org/other/haskell/Outputprelude/zip_f.html
-    list1       | list2   | zipped
-    [1,2,3]     | [9,8,7] | [[1,9],[2,8],[3,7]]
-    [1,2,3,4,5] | [9,8]   | [[1,9],[2,8]]
+  def collectWithIndex(Closure clos) {
+    def result = []
+    this.eachWithIndex { item, idx ->
+      result << clos(item, idx)
+    }
+    result
   }
 
   /**
-   * using use block with static
+   * Haskell like replicate.
+   * cf. http://zvon.org/other/haskell/Outputprelude/replicate_f.html
    */
-  def using(Closure clos) {
-    use(ListExt.withStatic) {
-      return clos.call()
-    }
+  def replicate(int num) {
+    def result = []
+    num.times{ result << this }
+    result
   }
 }

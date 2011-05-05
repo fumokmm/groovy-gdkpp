@@ -14,20 +14,34 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
-/**
- * static methods extends
- */
-@Category(Class)
-class FileStaticExt extends StaticExt {
-  private static final Class category = File
+import spock.lang.*
+
+class MixUseTest extends Specification {
+  def "use many category class and run"() {
+    given:
+    def file = null
+    def zipped = null
+
+    when:
+    using {
+      zipped = [1,2,3].zip([4,5,6])
+      file = File.pwd()
+    }
+
+    then:
+    zipped == [[1,4], [2,5], [3,6]]
+    file.path == '.'
+  }
 
   /**
-   * @return current directory's File.
+   * using use block with static
    */
-  File pwd() {
-    checkIsAssignable(this, category)
-    new File('.')
+  def using(Closure clos) {
+    // using list expand operator (*)
+    use(*ListExt.withStatic, *FileExt.withStatic) {
+      return clos.call()
+    }
   }
 }

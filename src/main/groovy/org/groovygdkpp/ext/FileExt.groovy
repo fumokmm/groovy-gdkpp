@@ -14,34 +14,19 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
-import spock.lang.*
-
-class MixUseTest extends Specification {
-  def "use many category class and run"() {
-    given:
-    def file = null
-    def zipped = null
-
-    when:
-    using {
-      zipped = [1,2,3].zip([4,5,6])
-      file = File.pwd()
-    }
-
-    then:
-    zipped == [[1,4], [2,5], [3,6]]
-    file.path == '.'
-  }
+/**
+ * instance methods extends
+ */
+@Category(File)
+class FileExt {
+  static final def withStatic = [FileExt, FileStaticExt]
 
   /**
-   * using use block with static
+   * override '/' operator.
    */
-  def using(Closure clos) {
-    // using list expand operator (*)
-    use(*ListExt.withStatic, *FileExt.withStatic) {
-      return clos.call()
-    }
+  File div(String other) {
+    new File(this, other)
   }
 }

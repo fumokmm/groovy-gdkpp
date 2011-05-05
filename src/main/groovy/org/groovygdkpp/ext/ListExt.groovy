@@ -14,46 +14,20 @@
  * limitations under the License.
  */
 
-package ext
+package org.groovygdkpp.ext
 
-import spock.lang.*
-
-class FileExtTest extends Specification {
-  def "is pwd work?"() {
-    given:
-    def file = null
-
-    when:
-    using{ file = File.pwd() }
-
-    then:
-    file.name == '.'
-  }
-
-  def "is div work?"() {
-    given:
-    def file = null
-    using{ file = File.pwd() }
-
-    when:
-    using{ file = file / 'a' }
-
-    then:
-    file.path == './a'
-
-    when:
-    using{ file = file / 'b' / 'c' }
-
-    then:
-    file.path == './a/b/c'
-  }
+/**
+ * instance methods extends
+ */
+@Category(List)
+class ListExt {
+  static final def withStatic = [ListExt]
 
   /**
-   * using use block with static
+   * haskell like zip method
+   * cf. http://zvon.org/other/haskell/Outputprelude/zip_f.html
    */
-  def using(Closure clos) {
-    use(FileExt.withStatic) {
-      return clos.call()
-    }
+  def zip(List other) {
+    [this, other].transpose()
   }
 }
